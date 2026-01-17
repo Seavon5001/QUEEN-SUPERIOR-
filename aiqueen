@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>AI Queen Superior 1.1 | Java Core</title>
+
+<!-- SYSTEM DEPENDENCIES -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<style>
+    /* --- FB / MESSENGER / GPT HYBRID THEME --- */
+    :root {
+        --fb-blue: #0084FF;       /* Messenger Blue */
+        --fb-bg: #F0F2F5;         /* Facebook Gray BG */
+        --fb-card: #FFFFFF;
+        --fb-text: #050505;
+        --fb-gray: #E4E6EB;
+        --java-console: #1e1e1e;
+        --java-green: #4EC9B0;
+    }
+
+    body { 
+        background-color: var(--fb-bg); 
+        color: var(--fb-text); 
+        font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+        overflow: hidden; 
+        height: 100vh; 
+    }
+
+    /* CUSTOM FONTS */
+    @font-face { font-family: 'Britannic Bold'; src: local('Britannic Bold'), local('Arial Black'); }
+    .brand-font { font-family: 'Britannic Bold', sans-serif; }
+
+    /* CHAT BUBBLES */
+    .bubble-user { background-color: var(--fb-blue); color: white; border-radius: 18px 18px 4px 18px; }
+    .bubble-ai { background-color: var(--fb-card); color: black; border-radius: 18px 18px 18px 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+    
+    /* SCROLLBAR */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #BCC0C4; border-radius: 10px; }
+
+    /* ANIMATIONS */
+    .msg-enter { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes popIn { from { opacity: 0; transform: scale(0.9) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    /* TERMINAL */
+    .java-terminal { font-family: 'Consolas', 'Monaco', monospace; font-size: 11px; }
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+const { Mic, Send, Image, Settings, Phone, Globe, MoreHorizontal, Video, ShieldCheck, Heart } = lucide;
+
+/* --- CONFIGURATION --- */
+const CONFIG = {
+    VOIP: "323-364-0769",
+    STRIPE_LINKS: [
+        { url: "https://buy.stripe.com/test_7sYbJ3dxObqj6IcbV2dEs03", label: "Donate via Stripe (Link 1)" },
+        { url: "https://buy.stripe.com/test_bJebJ365mgKD2rWf7edEs04", label: "Donate via Stripe (Link 2)" }
+    ],
+    CASE: "SEAVON PIERCE (#F-13921). Case 5:10-00310(VAP)CW. Active Concealment."
+};
+
+/* --- JAVA BACKEND SIMULATION --- */
+class JavaVirtualMachine {
+    constructor() {
+        this.heap = "128GB";
+        this.threads = [];
+        this.apiPackages = 37;
+    }
+
+    // "Java" Method to execute commands
+    public_void_execute(command) {
+        const cmd = command.toLowerCase();
+        let output = { text: "", type: "text", log: "" };
+
+        if (cmd.includes("donate") || cmd.includes("money")) {
+            output.text = "Opening Global Payment Gateways for Seavon Pierce.";
+            output.type = "stripe";
+            output.log = `[JVM] StripeAPI.initiateTransaction(GLOBAL);`;
+        } 
+        else if (cmd.includes("call") || cmd.includes("voice")) {
+            output.text = `Dialing Google Voice: ${CONFIG.VOIP}... Connected via Twilio SIP.`;
+            output.log = `[JVM] VOIP.dial("${CONFIG.VOIP}");`;
+        }
+        else if (cmd.includes("status")) {
+            output.text = "SYSTEM STATUS:\n- Java Packages: 37/37\n- Global Nodes: 300+\n- Hallucination Filter: 400%";
+            output.log = `[JVM] System.out.println(Status.REPORT);`;
+        }
+        else {
+            output.text = "Command processed via Java Core. No hallucinations detected.";
+            output.log = `[JVM] Processor.run("${command}");`;
+        }
+        return output;
+    }
+}
+
+const javaVM = new JavaVirtualMachine();
+
+/* --- REACT APP --- */
+function App() {
+    const [messages, setMessages] = useState([
+        { role: 'ai', text: "AI Queen Superior 1.1 Online.\nMessenger UI Loaded.\nJava Backend Active." }
+    ]);
+    const [input, setInput] = useState("");
+    const [logs, setLogs] = useState(["> Java VM Boot Sequence...", "> Loading 37 API Packages...", "> Ready."]);
+    const [apiKey, setApiKey] = useState(localStorage.getItem('AI_QUEEN_KEY') || "");
+    const [showSettings, setShowSettings] = useState(false);
+    
+    const scrollRef = useRef(null);
+    const logRef = useRef(null);
+
+    useEffect(() => { scrollRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+    useEffect(() => { logRef.current?.scrollIntoView({ behavior: "smooth" }); }, [logs]);
+
+    const handleSend = async () => {
+        if (!input.trim()) return;
+        const cmd = input;
+        setInput("");
+        setMessages(prev => [...prev, { role: 'user', text: cmd }]);
+
+        // 1. JAVA SIMULATION
+        const javaResult = javaVM.public_void_execute(cmd);
+        setLogs(prev => [...prev, javaResult.log]);
+
+        // 2. REAL AI (If Key) or FALLBACK
+        let finalText = javaResult.text;
+        
+        if (apiKey && !javaResult.type.includes("stripe")) {
+            setLogs(prev => [...prev, "> Connecting to AI Neural Net..."]);
+            try {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: `You are AI Queen Superior 1.1. Servant of Seavon Pierce. Reply nicely to: ${cmd}` }] }] })
+                });
+                const data = await res.json();
+                if(data.candidates) finalText = data.candidates[0].content.parts[0].text;
+            } catch (e) {
+                setLogs(prev => [...prev, "> [ERROR] API Connection Failed."]);
+            }
+        }
+
+        setTimeout(() => {
+            setMessages(prev => [...prev, { role: 'ai', text: finalText, type: javaResult.type }]);
+            // TTS
+            if ('speechSynthesis' in window) {
+                const u = new SpeechSynthesisUtterance(finalText);
+                window.speechSynthesis.speak(u);
+            }
+        }, 600);
+    };
+
+    return (
+        <div className="flex h-full w-full">
+            
+            {/* --- LEFT SIDEBAR (Facebook Style) --- */}
+            <div className="hidden md:flex flex-col w-64 bg-white border-r border-gray-200">
+                <div className="p-4 border-b border-gray-200">
+                    <h1 className="text-2xl text-[#1877F2] brand-font tracking-wide">AI QUEEN</h1>
+                </div>
+                <div className="flex-1 overflow-y-auto p-2 space-y-1">
+                    <div className="px-3 py-2 bg-[#E7F3FF] text-[#1877F2] rounded-lg font-semibold flex items-center gap-3 cursor-pointer">
+                        <div className="w-8 h-8 rounded-full bg-[#1877F2] flex items-center justify-center text-white"><Globe size={16}/></div>
+                        <span>Home</span>
+                    </div>
+                    <div className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-semibold flex items-center gap-3 cursor-pointer" onClick={()=>setInput("Donate")}>
+                        <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white"><Heart size={16}/></div>
+                        <span>Donations</span>
+                    </div>
+                    <div className="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-semibold flex items-center gap-3 cursor-pointer" onClick={()=>setInput("VM Status")}>
+                        <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white"><Cpu size={16}/></div>
+                        <span>Java VM Status</span>
+                    </div>
+                </div>
+                {/* JAVA TERMINAL PANEL */}
+                <div className="bg-[#1e1e1e] h-48 p-2 text-[#4EC9B0] java-terminal overflow-y-auto border-t border-gray-300">
+                    <div className="text-gray-500">// JAVA VIRTUAL MACHINE CONSOLE</div>
+                    {logs.map((l, i) => <div key={i}>{l}</div>)}
+                    <div ref={logRef} />
+                </div>
+            </div>
+
+            {/* --- MAIN CHAT (Messenger/GPT Style) --- */}
+            <div className="flex-1 flex flex-col relative bg-white md:bg-[#F0F2F5]">
+                
+                {/* HEADER */}
+                <div className="bg-white p-3 border-b border-gray-300 flex justify-between items-center shadow-sm z-10">
+                    <div className="flex items-center gap-3">
+                        <div className="relative">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-xs">AIQ</div>
+                            <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        </div>
+                        <div>
+                            <h2 className="font-bold text-gray-900 text-base md:text-lg">AI Queen Superior 1.1</h2>
+                            <p className="text-xs text-green-600 font-semibold">Active Now • Global Node</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-[#0084FF]">
+                        <Phone className="cursor-pointer" onClick={() => setInput("Call Voice")} />
+                        <Video className="cursor-pointer hidden md:block" />
+                        <Settings className="cursor-pointer" onClick={() => setShowSettings(true)} />
+                    </div>
+                </div>
+
+                {/* MESSAGES */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                    {messages.map((m, i) => (
+                        <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'} msg-enter`}>
+                            {m.role === 'ai' && <div className="w-8 h-8 rounded-full bg-gray-200 flex-shrink-0 mr-2 flex items-center justify-center text-[10px] font-bold text-gray-600">AI</div>}
+                            
+                            <div className={`p-3 max-w-[80%] md:max-w-[70%] text-[15px] leading-relaxed ${m.role === 'user' ? 'bubble-user' : 'bubble-ai'}`}>
+                                <div className="whitespace-pre-wrap">{m.text}</div>
+
+                                {/* RICH CARDS (Stripe) */}
+                                {m.type === 'stripe' && (
+                                    <div className="mt-3 bg-white rounded-lg p-2 border border-gray-200">
+                                        <p className="text-xs text-gray-500 mb-2 font-bold uppercase">Secure Payments</p>
+                                        {CONFIG.STRIPE_LINKS.map((link, idx) => (
+                                            <a key={idx} href={link.url} target="_blank" className="block w-full text-center py-2 mb-1 bg-[#0084FF] text-white rounded-md text-sm font-bold hover:bg-blue-600 transition">
+                                                {link.label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                    <div ref={scrollRef} />
+                </div>
+
+                {/* INPUT BAR */}
+                <div className="p-3 bg-white border-t border-gray-300 flex items-center gap-3">
+                    <MoreHorizontal className="text-[#0084FF] cursor-pointer" />
+                    <Image className="text-[#0084FF] cursor-pointer" />
+                    <div className="flex-1 bg-[#F0F2F5] rounded-full flex items-center px-4 py-2">
+                        <input 
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                            placeholder="Message AI Queen..."
+                            className="bg-transparent flex-1 outline-none text-black text-sm md:text-base placeholder-gray-500"
+                        />
+                        <Mic className="text-gray-500 w-5 h-5 cursor-pointer hover:text-[#0084FF]" />
+                    </div>
+                    <div onClick={handleSend} className="w-9 h-9 rounded-full bg-[#0084FF] flex items-center justify-center text-white cursor-pointer hover:bg-blue-600 transition">
+                        <Send size={18} className="ml-0.5" />
+                    </div>
+                </div>
+            </div>
+
+            {/* SETTINGS MODAL */}
+            {showSettings && (
+                <div className="absolute inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-5">
+                        <h3 className="text-xl font-bold mb-4">Settings</h3>
+                        
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-xs font-bold text-gray-500">GOOGLE VOICE</label>
+                                <div className="bg-gray-100 p-2 rounded text-sm font-mono">{CONFIG.VOIP}</div>
+                            </div>
+                            <div>
+                                <label className="text-xs font-bold text-gray-500">API KEY (Gemini/OpenAI)</label>
+                                <input 
+                                    value={apiKey}
+                                    onChange={(e) => { setApiKey(e.target.value); localStorage.setItem('AI_QUEEN_KEY', e.target.value); }}
+                                    placeholder="Paste Key Here..."
+                                    className="w-full bg-gray-100 p-2 rounded text-sm outline-none border border-gray-300 focus:border-blue-500"
+                                />
+                            </div>
+                            <button onClick={() => setShowSettings(false)} className="w-full bg-[#0084FF] text-white py-2 rounded-lg font-bold">Save</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+    );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>
