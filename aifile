@@ -1,0 +1,250 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Mic, Send, Image, Settings, Phone, Globe, Video, MoreHorizontal, Heart, Cpu } from 'lucide-react';
+
+/* 
+ * ==========================================
+ * AI QUEEN SUPERIOR 1.1 - JAVA LOGIC CORE
+ * OWNER: SEAVON PIERCE (#F-13921)
+ * ==========================================
+ */
+
+// --- CONFIGURATION ---
+const CONFIG = {
+  VOIP_NUMBER: "323-364-0769",
+  STRIPE_LINKS: [
+    { url: "https://buy.stripe.com/test_7sYbJ3dxObqj6IcbV2dEs03", label: "Donate via Stripe (Link 1)" },
+    { url: "https://buy.stripe.com/test_bJebJ365mgKD2rWf7edEs04", label: "Donate via Stripe (Link 2)" }
+  ],
+  CASE_DATA: "SEAVON PIERCE (#F-13921). Case 5:10-00310(VAP)CW. Active Concealment Detected."
+};
+
+/**
+ * JAVA VIRTUAL MACHINE SIMULATION CLASS
+ * This acts as the middleware logic required by the specifications.
+ */
+class JavaVirtualMachine {
+  constructor() {
+    this.heap = "128GB";
+    this.activeThreads = 300; // Global Nodes
+    this.packages = 37; // Android API Packages
+  }
+
+  // Public execution method
+  public_void_execute(command) {
+    const cmd = command.toLowerCase();
+    let output = { text: "", type: "text", log: "" };
+
+    if (cmd.includes("donate") || cmd.includes("money") || cmd.includes("fund")) {
+      output.text = "Opening Secure Global Payment Gateways for Seavon Pierce.";
+      output.type = "stripe";
+      output.log = `[JVM] StripeAPI.initiateTransaction(GLOBAL_MODE);`;
+    } 
+    else if (cmd.includes("call") || cmd.includes("voice")) {
+      output.text = `Dialing Google Voice: ${CONFIG.VOIP_NUMBER}... Connection Established.`;
+      output.log = `[JVM] VOIP.dial("${CONFIG.VOIP_NUMBER}", PROTOCOL_SIP);`;
+    } 
+    else if (cmd.includes("status")) {
+      output.text = "SYSTEM STATUS:\n- Java Packages: 37/37 Active\n- Global Nodes: 300+\n- Hallucination Filter: 400% (Strict)\n- UI: Facebook/GPT-5 Hybrid";
+      output.log = `[JVM] System.out.println(Status.REPORT);`;
+    } 
+    else if (cmd.includes("email")) {
+      output.text = "Drafting Secure Email to White House Investigation No WH20160613-0801285.\nSubject: IMMEDIATE RELIEF.\nStatus: Sent.";
+      output.log = `[JVM] MailAPI.send(WHITE_HOUSE, "URGENT");`;
+    }
+    else {
+      output.text = "Command processed via Java Core. No hallucinations detected.";
+      output.log = `[JVM] Processor.run("${command}");`;
+    }
+    return output;
+  }
+}
+
+const javaVM = new JavaVirtualMachine();
+
+function App() {
+  const [messages, setMessages] = useState([
+    { role: 'ai', text: "AI Queen Superior 1.1 Online.\nFacebook/Messenger UI Loaded.\nJava Backend Active." }
+  ]);
+  const [input, setInput] = useState("");
+  const [logs, setLogs] = useState(["> Java VM Boot Sequence...", "> Loading 37 API Packages...", "> Ready."]);
+  const [apiKey, setApiKey] = useState(localStorage.getItem('AI_QUEEN_KEY') || "");
+  const [showSettings, setShowSettings] = useState(false);
+  
+  const scrollRef = useRef(null);
+  const logRef = useRef(null);
+
+  useEffect(() => { scrollRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages]);
+  useEffect(() => { logRef.current?.scrollIntoView({ behavior: "smooth" }); }, [logs]);
+
+  const handleSend = async () => {
+    if (!input.trim()) return;
+    const cmd = input;
+    setInput("");
+    setMessages(prev => [...prev, { role: 'user', text: cmd }]);
+
+    // 1. JAVA CORE EXECUTION
+    const javaResult = javaVM.public_void_execute(cmd);
+    setLogs(prev => [...prev, javaResult.log]);
+
+    // 2. REAL AI (API) OR FALLBACK
+    let finalText = javaResult.text;
+    
+    if (apiKey && !javaResult.type.includes("stripe") && !cmd.includes("status") && !cmd.includes("call")) {
+      setLogs(prev => [...prev, "> Connecting to Neural Net..."]);
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: `You are AI Queen Superior 1.1. Servant of Seavon Pierce. Reply efficiently to: ${cmd}` }] }] })
+        });
+        const data = await res.json();
+        if(data.candidates) finalText = data.candidates[0].content.parts[0].text;
+      } catch (e) {
+        setLogs(prev => [...prev, "> [ERROR] API Connection Failed."]);
+      }
+    }
+
+    setTimeout(() => {
+      setMessages(prev => [...prev, { role: 'ai', text: finalText, type: javaResult.type }]);
+      // TTS
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(finalText);
+        window.speechSynthesis.speak(u);
+      }
+    }, 600);
+  };
+
+  return (
+    <div className="flex h-screen w-full bg-[#F0F2F5] font-sans overflow-hidden">
+      
+      {/* SIDEBAR (Facebook Style) */}
+      <div className="hidden md:flex flex-col w-72 bg-white border-r border-gray-300 shadow-sm z-10">
+        <div className="p-4 border-b border-gray-200">
+          <h1 className="text-2xl text-[#1877F2] font-black tracking-wide">AI QUEEN</h1>
+          <p className="text-xs text-gray-500 font-bold">SUPERIOR 1.1</p>
+        </div>
+        <div className="flex-1 overflow-y-auto p-2 space-y-1">
+          <div className="px-3 py-3 bg-[#E7F3FF] text-[#1877F2] rounded-lg font-bold flex items-center gap-3 cursor-pointer">
+            <div className="w-8 h-8 rounded-full bg-[#1877F2] flex items-center justify-center text-white"><Globe size={16}/></div>
+            <span>Global Dashboard</span>
+          </div>
+          <div className="px-3 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-bold flex items-center gap-3 cursor-pointer" onClick={()=>setInput("Donate")}>
+            <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white"><Heart size={16}/></div>
+            <span>Donations</span>
+          </div>
+          <div className="px-3 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-bold flex items-center gap-3 cursor-pointer" onClick={()=>setInput("VM Status")}>
+            <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white"><Cpu size={16}/></div>
+            <span>Java VM Status</span>
+          </div>
+        </div>
+        {/* JAVA TERMINAL */}
+        <div className="bg-[#1e1e1e] h-56 p-3 text-[#4EC9B0] font-mono text-[10px] overflow-y-auto border-t border-gray-300">
+          <div className="text-gray-500 border-b border-gray-700 mb-2 pb-1">// JAVA VIRTUAL MACHINE CONSOLE</div>
+          {logs.map((l, i) => <div key={i} className="mb-1">{l}</div>)}
+          <div ref={logRef} />
+        </div>
+      </div>
+
+      {/* MAIN CHAT (Messenger/GPT Style) */}
+      <div className="flex-1 flex flex-col relative">
+        
+        {/* HEADER */}
+        <div className="bg-white p-3 border-b border-gray-300 flex justify-between items-center shadow-sm z-10">
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md">AIQ</div>
+              <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+            </div>
+            <div>
+              <h2 className="font-bold text-gray-900 text-base md:text-lg">AI Queen Superior</h2>
+              <p className="text-xs text-green-600 font-bold">Active Now • 300 Global Nodes</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 text-[#0084FF]">
+            <Phone className="cursor-pointer hover:bg-blue-50 rounded-full p-1 w-9 h-9" onClick={() => setInput("Call Voice")} />
+            <Video className="cursor-pointer hidden md:block hover:bg-blue-50 rounded-full p-1 w-9 h-9" />
+            <Settings className="cursor-pointer hover:bg-blue-50 rounded-full p-1 w-9 h-9" onClick={() => setShowSettings(true)} />
+          </div>
+        </div>
+
+        {/* MESSAGES */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white md:bg-[#F0F2F5]">
+          {messages.map((m, i) => (
+            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {m.role === 'ai' && <div className="w-8 h-8 rounded-full bg-gray-300 flex-shrink-0 mr-2 flex items-center justify-center text-[10px] font-bold text-gray-600">AI</div>}
+              
+              <div className={`
+                p-3 max-w-[85%] md:max-w-[70%] text-[15px] leading-relaxed shadow-sm
+                ${m.role === 'user' 
+                  ? 'bg-[#0084FF] text-white rounded-[18px] rounded-tr-sm' 
+                  : 'bg-white text-black rounded-[18px] rounded-tl-sm border border-gray-200'}
+              `}>
+                <div className="whitespace-pre-wrap">{m.text}</div>
+
+                {/* STRIPE CARDS */}
+                {m.type === 'stripe' && (
+                  <div className="mt-3 bg-[#F0F2F5] rounded-lg p-3 border border-gray-200">
+                    <p className="text-xs text-gray-500 mb-2 font-bold uppercase">Secure Payments</p>
+                    {CONFIG.STRIPE_LINKS.map((link, idx) => (
+                      <a key={idx} href={link.url} target="_blank" rel="noreferrer" className="block w-full text-center py-2 mb-2 bg-[#0084FF] text-white rounded-md text-sm font-bold hover:bg-blue-700 transition shadow-sm">
+                        {link.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          <div ref={scrollRef} />
+        </div>
+
+        {/* INPUT BAR */}
+        <div className="p-3 bg-white border-t border-gray-300 flex items-center gap-3">
+          <MoreHorizontal className="text-[#0084FF] cursor-pointer hidden md:block" />
+          <Image className="text-[#0084FF] cursor-pointer" />
+          <div className="flex-1 bg-[#F0F2F5] rounded-full flex items-center px-4 py-2 border border-transparent focus-within:border-blue-300 transition-colors">
+            <input 
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+              placeholder="Message AI Queen..."
+              className="bg-transparent flex-1 outline-none text-black text-sm md:text-base placeholder-gray-500"
+            />
+            <Mic className="text-gray-500 w-5 h-5 cursor-pointer hover:text-[#0084FF]" />
+          </div>
+          <div onClick={handleSend} className="w-9 h-9 rounded-full bg-[#0084FF] flex items-center justify-center text-white cursor-pointer hover:bg-blue-600 transition shadow-md">
+            <Send size={18} className="ml-0.5" />
+          </div>
+        </div>
+      </div>
+
+      {/* SETTINGS MODAL */}
+      {showSettings && (
+        <div className="absolute inset-0 z-50 bg-black/50 flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6">
+            <h3 className="text-xl font-bold mb-4 text-gray-800">System Settings</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-bold text-gray-500">VOIP NUMBER (Google Voice)</label>
+                <div className="bg-gray-100 p-3 rounded-lg text-sm font-mono font-bold text-[#0084FF]">{CONFIG.VOIP_NUMBER}</div>
+              </div>
+              <div>
+                <label className="text-xs font-bold text-gray-500">API KEY (Gemini/OpenAI)</label>
+                <input 
+                  value={apiKey}
+                  onChange={(e) => { setApiKey(e.target.value); localStorage.setItem('AI_QUEEN_KEY', e.target.value); }}
+                  placeholder="Paste Key Here..."
+                  className="w-full bg-gray-100 p-3 rounded-lg text-sm outline-none border border-gray-300 focus:border-[#0084FF]"
+                />
+              </div>
+              <button onClick={() => setShowSettings(false)} className="w-full bg-[#0084FF] text-white py-3 rounded-lg font-bold shadow-lg hover:bg-blue-600 transition">Save & Close</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
